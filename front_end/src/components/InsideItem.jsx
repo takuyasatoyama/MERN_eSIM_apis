@@ -10,9 +10,6 @@ const InsideItem = (props) => {
             <p className="m-0">order#</p>
             <p className="m-0">{orderID}</p>
           </div>
-
-
-          
           <div className="flex flex-col items-end justify-between">
             <p className="m-0">Status</p>
             <h6 className="m-0">
