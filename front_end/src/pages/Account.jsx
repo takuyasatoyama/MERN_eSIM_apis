@@ -36,8 +36,8 @@ const Account = () => {
     },
   ];
   return (
-    <>
-      <div className="flex w-full justify-between items-center shadow-[1px_2px_10px_-5px] p-2 mb-2 rounded-lg">
+    <div className="w-full bg-white px-4">
+      <div className="flex w-full bg-white mt-4 m-auto justify-between items-center shadow-[1px_2px_10px_-5px] p-2 mb-2 rounded-lg">
         <div className="flex items-center">
           <img
             className="avatar rounded-circle w-20"
@@ -56,12 +56,12 @@ const Account = () => {
       </div>
       <Button
         size="lg"
-        className="w-full"
+        className="w-full my-4"
         style={{ backgroundColor: "#00274C" }}
       >
         logout
       </Button>
-    </>
+    </div>
   );
 };
 export default Account;

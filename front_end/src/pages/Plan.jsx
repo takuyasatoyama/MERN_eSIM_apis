@@ -1,4 +1,5 @@
 import PlanItem from "../components/PlanItem";
+import Button from "react-bootstrap/esm/Button";
 
 const Plan = () => {
   const storageArr = [
@@ -49,7 +50,7 @@ const Plan = () => {
   ];
 
   return (
-    <>
+    <div className="w-full px-3">
       <div className="flex items-center">
         <img src="/images/Vector.png" className="rounded-circle mr-3" alt="" />
         <div className="flex flex-col items-start justify-between">
@@ -69,7 +70,23 @@ const Plan = () => {
           <PlanItem {...item} key={index} />
         ))}
       </div>
-    </>
+
+      <div className="px-4 py-3 w-full" style={{backgroundColor: "#00274C"}}>
+        <div className="flex items-center w-full justify-between">
+          <div className="flex flex-col w-[60%] items-start justify-between text-white ">
+            <h4>10GB</h4>
+            <h6>100 MINUTES</h6>
+          </div>
+          <div className="flex flex-col w-[40%] items-start border-l border-white pl-2 justify-between text-white">
+            <p>TOTAL</p>
+            <h4>$53.00 USD</h4>
+          </div>
+        </div>
+        <Button variant="outline-light mt-3" className="w-full">
+          Buy Now
+        </Button>
+      </div>
+    </div>
   );
 };
 export default Plan;

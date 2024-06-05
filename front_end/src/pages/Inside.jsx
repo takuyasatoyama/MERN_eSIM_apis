@@ -44,7 +44,7 @@ const Inside = () => {
     },
   ];
   return (
-    <>
+    <div className="px-3 w-full pt-4">
       <InsideItem {...cardData} />
       <Button
         size="lg"
@@ -54,7 +54,7 @@ const Inside = () => {
         TOP UP +
       </Button>
       <CustomAccordion data={accordions} />
-    </>
+    </div>
   );
 };
 

@@ -17,7 +17,7 @@ const MySims = () => {
     },
   ];
   return (
-    <>
+    <div className="w-full px-3 mt-4">
       {simArr.map((item, index) => (
         <SimItem {...item} key={index} />
       ))}
@@ -31,7 +31,7 @@ const MySims = () => {
       >
         TOP UP +
       </Button>
-    </>
+    </div>
   );
 };
 
