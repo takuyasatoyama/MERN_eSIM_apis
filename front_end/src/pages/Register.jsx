@@ -1,24 +1,28 @@
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
-import axios from "axios";
-import { useGoogleLogin } from "@react-oauth/google";
 import { useDispatch } from "react-redux";
-import { authActions } from "../store";
 
-const Login = () => {
+import { history } from "../helpers/history";
+import { alertActions } from "../store";
+import { userActions } from "../store";
+
+const Register = () => {
+  // const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+  // const [error, setError] = useState(false);
+
   const dispatch = useDispatch();
-  const [user, setUser] = useState([]);
-  const [profile, setProfile] = useState([]);
 
   // form validation rules
   const validationSchema = Yup.object().shape({
     email: Yup.string().required("Email is required"),
-    password: Yup.string().required("Password is required"),
+    password: Yup.string()
+      .required("Password is required")
+      .min(6, "Password must be at least 6 characters"),
   });
   const formOptions = { resolver: yupResolver(validationSchema) };
 
@@ -26,67 +30,63 @@ const Login = () => {
   const { register, formState, handleSubmit } = useForm(formOptions);
   const { errors, isSubmitting } = formState;
 
-  function onSubmit({ email, password }) {
-    return dispatch(authActions.login({ email, password }));
-  }
+  async function onSubmit(data) {
+    dispatch(alertActions.clear());
+    try {
+      await dispatch(userActions.register(data)).unwrap();
 
-  const googleLogin = useGoogleLogin({
-    onSuccess: (codeResponse) => setUser(codeResponse),
-    onError: (error) => console.log("Login Failed:", error),
-  });
-
-  useEffect(() => {
-    if (user) {
-      axios
-        .get(
-          `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`,
-          {
-            headers: {
-              Authorization: `Bearer ${user.access_token}`,
-              Accept: "application/json",
-            },
-          }
-        )
-        .then((res) => {
-          setProfile(res.data);
+      // redirect to login page and display success alert
+      history.navigate("/login");
+      dispatch(
+        alertActions.success({
+          message: "Registration successful",
+          showAfterRedirect: true,
         })
-        .catch((err) => console.log(err));
+      );
+    } catch (error) {
+      dispatch(alertActions.error(error));
     }
-  }, [user]);
+  }
 
   return (
     <div className="w-full">
       <div className="w-full px-10">
         <div className="form-header text-center mt-4 mb-4">
-          <Link to={"/register"} className="no-underline text-black">
-            <h4 className="text-gray-700 hover:text-black hover:underline">
-              Create an account
-            </h4>
-          </Link>
-          <h6>Enter your email to sign in for this app</h6>
+          <h3>Register</h3>
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Form.Control
             size="lg"
-            className={`mb-2 ${errors.email ? "is-invalid" : ""}`}
+            className={`mb-2 ${errors.firstName ? "is-invalid" : ""}`}
             type="email"
-            name="email"
-            value={profile.email ? profile.email : ""}
             {...register("email")}
             placeholder="example@gmail.com"
           />
           <div className="invalid-feedback">{errors.email?.message}</div>
           <Form.Control
             size="lg"
-            type="password"
-            name="password"
-            className={`${errors.password ? "is-invalid" : ""}`}
+            type={showPassword ? "text" : "password"}
             {...register("password")}
+            className={`${errors.firstName ? "is-invalid" : ""}`}
             placeholder="Enter Password"
           />
           <div className="invalid-feedback">{errors.password?.message}</div>
+          <div className="flex items-center justify-center">
+            <input
+              id="check"
+              size="lg"
+              type="checkbox"
+              onClick={() => {
+                setShowPassword((showPassword) => !showPassword);
+              }}
+            />
+            <label htmlFor="check" className="cursor-pointer ml-1">
+              Password Show
+            </label>
+          </div>
+
           <Button
-            className="bg-black w-full mt-3 hover:bg-gray-600"
+            className="bg-black w-full mt-3"
             size="lg"
             type="submit"
             disabled={isSubmitting}
@@ -94,7 +94,7 @@ const Login = () => {
             {isSubmitting && (
               <span className="spinner-border spinner-border-sm me-1"></span>
             )}
-            Sign in
+            Sign up
           </Button>
         </form>
         <div className="flex items-center my-2">
@@ -107,7 +107,6 @@ const Login = () => {
           className="w-full text-black"
           style={{ backgroundColor: "#dddcdc" }}
           size="lg"
-          onClick={googleLogin}
         >
           <div className="flex items-center justify-center">
             <img src="/images/google.png" alt="" />
@@ -153,4 +152,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

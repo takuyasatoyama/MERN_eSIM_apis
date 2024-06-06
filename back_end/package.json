@@ -4,19 +4,22 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": " mongod --dbpath D:/data && node ./bin/www"
+    "dev": "nodemon index.js",
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "bcrypt-nodejs": "^0.0.3",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
     "cookie-parser": "^1.4.6",
     "cookieparser": "^0.1.0",
     "cors": "^2.8.5",
     "debug": "^4.3.5",
+    "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "express-session": "^1.18.0",
     "jade": "^1.11.0",

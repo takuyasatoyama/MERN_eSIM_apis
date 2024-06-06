@@ -2,12 +2,14 @@ import { Virtual } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Button from "react-bootstrap/Button";
 import React from "react";
+// import { useSelector } from 'react-redux';
 
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/virtual";
 
 const Landing = () => {
+  // const auth = useSelector(x => x.auth.value);
   // Create array with 1000 slides
   const slides = Array.from({ length: 10 }).map(
     (el, index) => `Slide ${index + 1}`
@@ -17,6 +19,7 @@ const Landing = () => {
     <div className="w-[100%] bg-gray-200">
       <div className="about text-center bg-white p-1">
         <h2>Ready to Roam?</h2>
+        {/* <h1>Hi {auth?.email}!</h1> */}
         <p>
           Explore our range of flexible plans and start your journey with ARKA
           ROAM today, Stay connected, stay global!
@@ -91,7 +94,7 @@ const Landing = () => {
             </Button>
           </div>
         </div>
-        <div className="flex w-full justify-between items-center mb-2 border-2 bg-white border-black rounded-md">
+        <div className="flex w-full justify-between items-center border-2 bg-white border-black rounded-md">
           <img src="/images/vector.png" className="w-[15%] h-auto m-auto" alt="" />
           <div className="text-center p-3 border-r-2 border-l-2 h-full border-black">
             <p className="m-0 text-left">4G LTE</p>
@@ -112,7 +115,7 @@ const Landing = () => {
       </div>
       <div className="text-center w-full">
         <Button
-          className="border-black m-auto mt-3"
+          className="border-black m-auto mt-2 mb-2"
           style={{ backgroundColor: "#00274C" }}
         >
           Load more +
